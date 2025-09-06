@@ -11,7 +11,7 @@
 }
 
 body {
-  background-color: rgba(244, 240, 240, 0.622);
+  background-color: #f4f0f09f;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   overflow-x: hidden;
   min-width: 320px;
@@ -94,13 +94,14 @@ body {
   cursor: pointer;
 }
 
-.yourvlabtitle {
+.vlabtitle {
   font-size: 1rem;
   text-align: center;
   color: #000;
   padding-top: 1vh;
   font-weight: bold;
   width: 100%;
+  background-color: #f4f0f09f;
 }
 
 /* Navigation styles */
@@ -211,7 +212,7 @@ body {
 }
 
 .sticky-trigger {
-  height: 50px;
+  height: 1px;
   width: 100%;
   pointer-events: none;
 }
@@ -947,6 +948,13 @@ pre {
   }
 
   .zoomed-gif {
+    margin-top: 0px;
     transform: rotate(90deg);
     
   }
+code {
+  background-color: #f4f4f4;  
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-family: monospace;
+}

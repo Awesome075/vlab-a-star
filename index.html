@@ -13,6 +13,7 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/harmonic16-dark.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
 <body>
@@ -44,7 +45,7 @@
 
 
 
-  <div class="yourvlabtitle">
+  <div class="vlabtitle">
     <h1>A* Search Algorithm</h1>
   </div>
 
@@ -75,7 +76,7 @@
 
         <div class="link" title="Codes" onclick="switchContent('code')">
           <img class="icon" src="images/code_img.png" alt="CODES" />
-          <span>Codes</span>
+          <span>Code</span>
         </div>
 
         <div class="link" title="Result" onclick="switchContent('result')">
@@ -111,61 +112,481 @@
 
       <!-- Theory & Applications -->
       <div class="container" id="theory">
-        <div class="title">Theory & Applications</div>
+        <div class="title">Theory & Application</div>
         <div class="content">
-          <p>
-            This section covers the fundamental theories and applications of
-            the concept.
-          </p>
 
-          <span>Key Concepts</span>
-          <ul>
-            <li>Fundamentals of Data Structures</li>
-            <li>
-              Algorithms and Their Applications
-              <ul>
-                <li>Sorting Algorithms</li>
-                <li>Searching Algorithms</li>
+          <p style="text-align: justify;">The <b>A* Search Algorithm</b> is an informed, best-first search algorithm that finds the shortest path between a starting point and a destination point on a weighted graph. Unlike uninformed search methods like Djikstra, that explore a graph blindly, A* uses a heuristic to guide its search, making it highly efficient. It's often used for pathfinding problems where the goal is to find the most cost-effective route.<br><br></p>
+
+          <p style="text-align: justify;">
+            The algorithm's core strength lies in its ability to combine two types of costs:-</p>
+
+          <ol style="margin:0; padding-left:20px;">
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              <b>Past Cost</b>,  \(g(n)\) : The actual cost of the path from starting node to the current node \(n\).</li> 
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              <b>Future Cost</b>,  \(h(n)\) : A heuristic estimate of the cost from the current node \(n\) to the goal node.  </li>
+          </ol><br>
+
+          <p style="text-align: justify;">A* uses a cost function, \( f(n) = g(n) + h(n) \), to determine which node to explore next. It always selects the node with the lowest \(f(n)\) value from a list of open nodes, prioritizing paths that are both cheap to get to and look promising for the future.</p><br><br>
+
+          <h2 style="text-align: justify;"> The Heuristic Function (\(h(n)\))</h2>
+          <p style="text-align: justify;"> The choice of the heuristic function is critical for the performance of A*. A good heuristic can significantly speed up the search by directing the algorithm towards the goal. For A* to guarantee finding the <b> optimal (shortest) path</b>, the heuristic must be <b>admissible</b>. This means that the estimated cost from node \(n\) to the goal node must never exceed the actual cost. A common admissible heuristic for navigation problems is the straight-line or <b>Euclidean distance</b> to the goal, as it's impossible for a path to be shorter than a straight line.</p><br><br>
+          
+          <p style="text-align: justify;">The algorithm operates by maintaining two sets of nodes:</p>
+          <ul style="margin:0; padding-left:20px;">
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              An <b>"open list" :</b> Nodes that have been discovered but not yet evaluated.
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              A <b>"closed list" :</b> Nodes that have already been evaluated.
+            </li>
+          </ul><br>
+
+          <p style="text-align: justify;">The A* algorithm have the following steps:</p>
+          <ol style="margin:0; padding-left:20px;">
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Add the starting node to the open list.
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              While the open list is not empty, choose the node with the lowest \(f(n)\) value.
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Move the chosen node from the open list to the closed list.
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              If the chosen node is the goal, the path has been found.
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              If not, evaluate all of the chosen node's neighbors. For each neighbor:
+              <ul style="margin:0; padding-left:20px;">
+                <li style="margin:0; line-height:1.3; text-align:justify;">
+                  Calculate its \(g(n)\) and \(f(n)\) values.
+                </li>
+                <li style="margin:0; line-height:1.3; text-align:justify;">
+                  If it's a new or a better path to that neighbor, add it to the open list.
+                </li>
               </ul>
             </li>
-            <li>Time Complexity Analysis</li>
-          </ul>
+            <li style="margin:0; line-height:1.3; text-align:justify;">Repeat steps 2-5 until the goal is reached.</li>
+          </ol><br>
 
-          <span>Applications in Real World</span>
-          <ol>
-            <li>Application of Sorting Algorithms in Search Engines</li>
-            <li>Machine Learning Algorithms in Predictive Analytics</li>
-            <li>Data Structures in Web Development</li>
-          </ol>
+          <h2 style="text-align:justify;"> Applications in the Real World</h2>
+          <p style="text-align:justify;">The A* algorithm is widely used in various fields where finding an optimal path is essential.</p>
+          <ul style="margin:0; padding-left:20px;">
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              <b>Video Games : </b>One of the most common applications. A* is used to determine the movement of non-player characters (NPCs) in games, allowing them to navigate complex environments and find the shortest route to a destination.
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              <b>Robotics & Autonomous Vehicles : </b>Used for path planning in robotics, allowing robots to move around a room without hitting obstacles. Similarly, autonomous vehicles use A* to calculate the most efficient and safe routes on the road.
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              <b>Logistics and Route Optimization : </b>Companies like Amazon and FedEx use A* or similar algorithms to find the most efficient delivery routes for their drivers, saving time and fuel.
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              <b>Network Routing : </b>It's applied in network systems to find the best path for data packets to travel from a source to a destination, ensuring fast and reliable data transmission.
+            </li>
+          </ul>
 
         </div>
       </div>
+
 
       <!-- Procedure -->
       <div class="container" id="procedure">
         <div class="title">Procedure</div>
         <div class="content">
-          <p>
-            This section provides the steps and procedure for implementing the
-            concept discussed above.
-          </p>
+          <p style="text-align: justify;">This section walks through the step-by-step process of how the A* algorithm finds the shortest path from the <b>start node (S)</b> to the <b>goal node (G)</b> on the search graph below. The numbers in red next to each node represent the heuristic values, \(h(n)\), which are our estimates of the cost to reach the goal.</p><br><br><br>
 
-          <span>Steps for Sorting Algorithms</span>
-          <ol>
-            <li>Choose the appropriate sorting algorithm based on data</li>
-            <li>Apply the sorting algorithm to the dataset</li>
-            <li>Analyze the time complexity and performance</li>
-          </ol>
+          <h1>Search Graph</h1> <br>
+          <img src="images/A-Star-Graph.png" alt="A*-Graph" style= "width: 100%; max-width: 600px; display: block; margin: 0 auto;"><br><br>
+          
+          <h2 style="text-align:justify;">Initialization</h2><br> 
+          <p style="text-align:justify;">Add <b>start node (S)</b> to the open list.</p><br>
+          <p style="text-align:justify;">\(g(S)\) = 0 (Actual cost from S\(→\)S)</p>
+          <p style="text-align:justify;">\(h(S)\) = 14 (Guess Cost from S\(→\)G)</p>
+          <p style="text-align:justify;"> \(f(S)=g(S)+h(S)\) = 0 + 14 = 14</p><br>
+          <p style="text-align:justify;"> Open List = [\(S(f=14)\)] </p>
+          <p style="text-align:justify;"> Closed List = [] </p><br>
 
-          <span>Steps for Implementing Search Algorithms</span>
-          <ul>
-            <li>Identify the data structure to be used</li>
-            <li>
-              Choose the best search algorithm (e.g., Linear Search, Binary
-              Search)
+
+          <h2 style="text-align:justify;">Iteration 1</h2><br>
+          <ol style="margin:0; padding-left:20px;">
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Is Open List Empty? \(→\) NO \(→\) Choose node with lowest \(f\) value \(→\) \(S\) 
             </li>
-            <li>Test the algorithm on various datasets</li>
-          </ul>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Move the chosen node from <i>Open List</i> to <i>Closed List</i>
+              <div style="padding-left:50px;">
+                Open List = []<br>
+                Closed List = [\(S\)]<br>
+              </div>            
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Is the chosen node goal? \(→\) NO \(→\) Evaluate all the neighbors of chosen node \((S)\) <b>:-</b> \(B\) , \(C\)
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              For \(B\) <b>:-</b> <br>
+              <div style="padding-left:50px;">
+                Calculate \(g(B)\) and \(f(B)\).<br>
+                \(g(B)\) = 4 (Actual cost from \(S→B\))<br>
+                \(h(B)\) = 12 (Guess cost from \(B→G\))<br>
+                \(f(B) = g(B) + h(B)\) = 4 + 12 = 16
+              </div></li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Is it a better cost path to \(B\) ? \(→\) YES \(→\) Add \(B\) to open list<br>
+              <div style="padding-left:50px;">
+              Open List = [\(B(f=16)\)]
+              </div>
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              For \(C\) <b>:-</b> <br>
+              <div style="padding-left:50px;">
+                Calculate \(g(C)\) and \(f(C)\).<br>
+                \(g(C)\) = 3 (Actual cost from \(S→C\))<br>
+                \(h(C)\) = 11 (Guess cost from \(C→G\))<br>
+                \(f(C) = g(C) + h(C)\) = 3 + 11 = 14
+              </div></li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Is it a better cost path to \(C\) ? \(→\) YES \(→\) Add \(C\) to open list<br>
+              <div style="padding-left:50px;">
+              Open List = [\(B(f=16), C(f=14)\)]
+              </div>
+            </li>
+          </ol><br>
+          <p style="text-align:justify;">At the end of iteration 1 <b>:-</b><br>
+            <div style="padding-left:50px; text-align: justify;">
+              Open List = [\(B(f=16), C(f=14)\)]<br>
+              Closed List = [\(S\)]
+            </div>
+          </p><br>
+          <table style="border-collapse: collapse; width: 60%; text-align: center;">
+            <tr>
+              <th style="border: 1px solid black; padding: 8px;">\(Node\)</th>
+              <th style="border: 1px solid black; padding: 8px;">\(g(n)\)</th>
+              <th style="border: 1px solid black; padding: 8px;">\(h(n)\)</th>
+              <th style="border: 1px solid black; padding: 8px;">\(f(n)\)</th>
+              <th style="border: 1px solid black; padding: 8px;">\(Path\)</th>
+            </tr>
+            <tr>
+              <td style="border: 1px solid black; padding: 8px;">\(B\)</td>
+              <td style="border: 1px solid black; padding: 8px;">4</td>
+              <td style="border: 1px solid black; padding: 8px;">12</td>
+              <td style="border: 1px solid black; padding: 8px;">16</td>
+              <td style="border: 1px solid black; padding: 8px;">\(S→B\)</td>
+            </tr>
+            <tr>
+              <td style="border: 1px solid black; padding: 8px;">\(C\)</td>
+              <td style="border: 1px solid black; padding: 8px;">3</td>
+              <td style="border: 1px solid black; padding: 8px;">11</td>
+              <td style="border: 1px solid black; padding: 8px;">14</td>
+              <td style="border: 1px solid black; padding: 8px;">\(S→C\)</td>
+            </tr>
+          </table><br>
+
+          <h2 style="text-align:justify;">Iteration 2</h2><br>
+          <ol style="margin:0; padding-left:20px;">
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Is Open List Empty? \(→\) NO \(→\) Choose node with lowest \(f\) value \(→\) \(C\) 
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Move the chosen node from <i>Open List</i> to <i>Closed List</i>
+              <div style="padding-left:50px;">
+                Open List = [\(B(f=16)\)]<br>
+                Closed List = [\(S, C\)]<br>
+              </div>            
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Is the chosen node goal? \(→\) NO \(→\) Evaluate all the neighbors of chosen node \((C)\) <b>:-</b> \(D\) , \(E\)
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              For \(D\) <b>:-</b> <br>
+              <div style="padding-left:50px;">
+                Calculate \(g(D)\) and \(f(D)\).<br>
+                \(g(D)\) = 3 + 7 = 10 (Actual cost from \(S→C→D\))<br>
+                \(h(D)\) = 6 (Guess cost from \(D→G\))<br>
+                \(f(D) = g(D) + h(D)\) = 10 + 6 = 16
+              </div></li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Is it a better cost path to \(D\) ? \(→\) YES \(→\) Add D to open list<br>
+              <div style="padding-left:50px;">
+              Open List = [\(B(f=16),\) \(D(f=16)\)]
+              </div>
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              For \(E\) <b>:-</b> <br>
+              <div style="padding-left:50px;">
+                Calculate \(g(E)\) and \(f(E)\).<br>
+                \(g(E)\) = 3 + 10 = 13 (Actual cost from \(S→C→E\))<br>
+                \(h(E)\) = 4 (Guess cost from \(E→G\))<br>
+                \(f(E) = g(E) + h(E)\) = 13 + 4 = 17
+              </div></li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Is it a better cost path to \(E\) ? \(→\) YES \(→\) Add \(E\) to open list<br>
+              <div style="padding-left:50px;">
+              Open List = [\(B(f=16), D(f=16), E(f=17)\)]
+              </div>
+            </li>
+          </ol><br>
+          <p style="text-align:justify;">At the end of iteration 2 <b>:-</b><br>
+            <div style="padding-left:50px; text-align: justify;">
+              Open List = [\(B(f=16), D(f=16), E(f=17)\)]<br>
+              Closed List = [\(S,C\)]
+            </div>
+          </p><br>
+          <table style="border-collapse: collapse; width: 60%; text-align: center;">
+            <tr>
+              <th style="border: 1px solid black; padding: 8px;">\(Node\)</th>
+              <th style="border: 1px solid black; padding: 8px;">\(g(n)\)</th>
+              <th style="border: 1px solid black; padding: 8px;">\(h(n)\)</th>
+              <th style="border: 1px solid black; padding: 8px;">\(f(n)\)</th>
+              <th style="border: 1px solid black; padding: 8px;">\(Path\)</th>
+            </tr>
+            <tr>
+              <td style="border: 1px solid black; padding: 8px;">\(B\)</td>
+              <td style="border: 1px solid black; padding: 8px;">4</td>
+              <td style="border: 1px solid black; padding: 8px;">12</td>
+              <td style="border: 1px solid black; padding: 8px;">16</td>
+              <td style="border: 1px solid black; padding: 8px;">\(S→B\)</td>
+            </tr>
+            <tr>
+              <td style="border: 1px solid black; padding: 8px;">\(D\)</td>
+              <td style="border: 1px solid black; padding: 8px;">10</td>
+              <td style="border: 1px solid black; padding: 8px;">6</td>
+              <td style="border: 1px solid black; padding: 8px;">16</td>
+              <td style="border: 1px solid black; padding: 8px;">\(S→C→D\)</td>
+            </tr>
+            <tr>
+              <td style="border: 1px solid black; padding: 8px;">\(E\)</td>
+              <td style="border: 1px solid black; padding: 8px;">13</td>
+              <td style="border: 1px solid black; padding: 8px;">4</td>
+              <td style="border: 1px solid black; padding: 8px;">17</td>
+              <td style="border: 1px solid black; padding: 8px;">\(S→C→E\)</td>
+            </tr>
+          </table><br>
+
+          <h2 style="text-align:justify;">Iteration 3</h2><br>
+          <ol style="margin:0; padding-left:20px;">
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Is Open List Empty? \(→\) NO \(→\) Choose node with lowest \(f\) value \(→\) \(B\) <br> <b>(In case of tie we can chose either nodes; here we decided to chose B since it came first in the open list.)</b>
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Move the chosen node from <i>Open List</i> to <i>Closed List</i>
+              <div style="padding-left:50px;">
+                Open List = [\(D(f=16), (E(f=17)\)]<br>
+                Closed List = [\(S, C, B\)]<br>
+              </div>            
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Is the chosen node goal? \(→\) NO \(→\) Evaluate all the neighbors of chosen node \((B)\) <b>:-</b> \(F\) , \(E\)
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              For \(F\) <b>:-</b> <br>
+              <div style="padding-left:50px;">
+                Calculate \(g(F)\) and \(f(F)\).<br>
+                \(g(F)\) = 4 + 5 = 9 (Actual cost from \(S→B→F\))<br>
+                \(h(F)\) = 11 (Guess cost from \(F→G\))<br>
+                \(f(F) = g(F) + h(F)\) = 9 + 11 = 20
+              </div></li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Is it a better cost path to \(F\) ? \(→\) YES \(→\) Add \(F\) to open list<br>
+              <div style="padding-left:50px;">
+              Open List = [\(D(f=16), E(f=17), F(f=20)\)]
+              </div>
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              For \(E\) <b>:-</b> <br>
+              <div style="padding-left:50px;">
+                Calculate \(g(E)\) and \(f(E)\).<br>
+                \(g(E)\) = 4 + 12 = 16 (Actual cost from \(S→B→E\))<br>
+                \(h(E)\) = 4 (Guess cost from \(E→G\))<br>
+                \(f(E) = g(E) + h(E)\) = 16 + 4 = 20
+              </div></li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Is it a better cost path to \(E\) ? \(→\) NO \(→\) Don't add new \(f\) value of \(E\) to open list<br>
+              <div style="padding-left:50px;">
+              Open List = [\(D(f=16), E(f=17), F(f=20)\)]
+              </div>
+            </li>
+          </ol><br>
+          <p style="text-align:justify;">At the end of iteration 3 <b>:-</b><br>
+            <div style="padding-left:50px; text-align: justify;">
+              Open List = [\(D(f=16), E(f=17), F(f=20)\)]<br>
+              Closed List = [\(S, C, B\)]
+            </div>
+          </p><br>
+          <table style="border-collapse: collapse; width: 60%; text-align: center;">
+            <tr>
+              <th style="border: 1px solid black; padding: 8px;">\(Node\)</th>
+              <th style="border: 1px solid black; padding: 8px;">\(g(n)\)</th>
+              <th style="border: 1px solid black; padding: 8px;">\(h(n)\)</th>
+              <th style="border: 1px solid black; padding: 8px;">\(f(n)\)</th>
+              <th style="border: 1px solid black; padding: 8px;">\(Path\)</th>
+            </tr>
+            <tr>
+              <td style="border: 1px solid black; padding: 8px;">\(D\)</td>
+              <td style="border: 1px solid black; padding: 8px;">10</td>
+              <td style="border: 1px solid black; padding: 8px;">6</td>
+              <td style="border: 1px solid black; padding: 8px;">16</td>
+              <td style="border: 1px solid black; padding: 8px;">\(S→C→D\)</td>
+            </tr>
+            <tr>
+              <td style="border: 1px solid black; padding: 8px;">\(E\)</td>
+              <td style="border: 1px solid black; padding: 8px;">13</td>
+              <td style="border: 1px solid black; padding: 8px;">4</td>
+              <td style="border: 1px solid black; padding: 8px;">17</td>
+              <td style="border: 1px solid black; padding: 8px;">\(S→C→E\)</td>
+            </tr>
+            <tr>
+              <td style="border: 1px solid black; padding: 8px;">\(F\)</td>
+              <td style="border: 1px solid black; padding: 8px;">9</td>
+              <td style="border: 1px solid black; padding: 8px;">11</td>
+              <td style="border: 1px solid black; padding: 8px;">20</td>
+              <td style="border: 1px solid black; padding: 8px;">\(S→B→F\)</td>
+            </tr>
+          </table><br>
+
+          <h2 style="text-align:justify;">Iteration 4</h2><br>
+          <ol style="margin:0; padding-left:20px;">
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Is Open List Empty? \(→\) NO \(→\) Choose node with lowest \(f\) value \(→\) \(D\) 
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Move the chosen node from <i>Open List</i> to <i>Closed List</i>
+              <div style="padding-left:50px;">
+                Open List = [\(E(f=17), F(f=20)\)]<br>
+                Closed List = [\(S, C, B, D\)]<br>
+              </div>            
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Is the chosen node goal? \(→\) NO \(→\) Evaluate all the neighbors of chosen node \((D)\) <b>:-</b> \(E\) 
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              For \(E\) <b>:-</b> <br>
+              <div style="padding-left:50px;">
+                Calculate \(g(E)\) and \(f(E)\).<br>
+                \(g(E)\) = 3 + 7 + 2 = 12 (Actual cost from \(S→C→D→E\))<br>
+                \(h(E)\) = 4 (Guess cost from \(E→G\))<br>
+                \(f(E) = g(E) + h(E)\) = 12 + 4 = 16
+              </div></li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Is it a  better cost path to \(E\) ? \(→\) YES \(→\) Add new \(f\) value of \(E\) to open list<br>
+              <div style="padding-left:50px;">
+              Open List = [\(E(f=16), F(f=20)\)]
+              </div>
+            </li>
+          </ol><br>
+          <p style="text-align:justify;">At the end of iteration 4 <b>:-</b><br>
+            <div style="padding-left:50px; text-align: justify;">
+              Open List = [\(E(f=16), F(f=20)\)]<br>
+              Closed List = [\(S, C, B, D\)]
+            </div>
+          </p><br>
+          <table style="border-collapse: collapse; width: 60%; text-align: center;">
+            <tr>
+              <th style="border: 1px solid black; padding: 8px;">\(Node\)</th>
+              <th style="border: 1px solid black; padding: 8px;">\(g(n)\)</th>
+              <th style="border: 1px solid black; padding: 8px;">\(h(n)\)</th>
+              <th style="border: 1px solid black; padding: 8px;">\(f(n)\)</th>
+              <th style="border: 1px solid black; padding: 8px;">\(Path\)</th>
+            </tr>
+            <tr>
+              <td style="border: 1px solid black; padding: 8px;">\(E\)</td>
+              <td style="border: 1px solid black; padding: 8px;">12</td>
+              <td style="border: 1px solid black; padding: 8px;">4</td>
+              <td style="border: 1px solid black; padding: 8px;">16</td>
+              <td style="border: 1px solid black; padding: 8px;">\(S→C→D→E\)</td>
+            </tr>
+            <tr>
+              <td style="border: 1px solid black; padding: 8px;">\(F\)</td>
+              <td style="border: 1px solid black; padding: 8px;">9</td>
+              <td style="border: 1px solid black; padding: 8px;">11</td>
+              <td style="border: 1px solid black; padding: 8px;">20</td>
+              <td style="border: 1px solid black; padding: 8px;">\(S→B→F\)</td>
+            </tr>
+          </table><br>
+
+          <h2 style="text-align:justify;">Iteration 5</h2><br>
+          <ol style="margin:0; padding-left:20px;">
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Is Open List Empty? \(→\) NO \(→\) Choose node with lowest \(f\) value \(→\) \(E\) 
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Move the chosen node from <i>Open List</i> to <i>Closed List</i>
+              <div style="padding-left:50px;">
+                Open List = [\(F(f=20)\)]<br>
+                Closed List = [\(S, C, B, D, E\)]<br>
+              </div>            
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Is the chosen node goal? \(→\) NO \(→\) Evaluate all the neighbors of chosen node \((E)\) <b>:-</b> \(G\) 
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              For \(G\) <b>:-</b> <br>
+              <div style="padding-left:50px;">
+                Calculate \(g(G)\) and \(f(G)\).<br>
+                \(g(G)\) = 3 + 7 + 2 + 5 = 17 (Actual cost from \(S→C→D→E→G\))<br>
+                \(h(G)\) = 0 (Guess cost from \(G→G\))<br>
+                \(f(G) = g(G) + h(G)\) = 17 + 0 = 17
+              </div></li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Is it a better cost path to \(G\) ? \(→\) YES \(→\) Add \(G\) to open list<br>
+              <div style="padding-left:50px;">
+              Open List = [\(F(f=20), G(f=17)\)]
+              </div>
+            </li>
+          </ol><br>
+          <p style="text-align:justify;">At the end of iteration 5 <b>:-</b><br>
+            <div style="padding-left:50px; text-align: justify;">
+              Open List = [\(F(f=20), G(f=17)\)]<br>
+              Closed List = [\(S, C, B, D, E\)]
+            </div>
+          </p><br>
+          <table style="border-collapse: collapse; width: 60%; text-align: center;">
+            <tr>
+              <th style="border: 1px solid black; padding: 8px;">\(Node\)</th>
+              <th style="border: 1px solid black; padding: 8px;">\(g(n)\)</th>
+              <th style="border: 1px solid black; padding: 8px;">\(h(n)\)</th>
+              <th style="border: 1px solid black; padding: 8px;">\(f(n)\)</th>
+              <th style="border: 1px solid black; padding: 8px;">\(Path\)</th>
+            </tr>
+            <tr>
+              <td style="border: 1px solid black; padding: 8px;">\(F\)</td>
+              <td style="border: 1px solid black; padding: 8px;">9</td>
+              <td style="border: 1px solid black; padding: 8px;">11</td>
+              <td style="border: 1px solid black; padding: 8px;">20</td>
+              <td style="border: 1px solid black; padding: 8px;">\(S→B→F\)</td>
+            </tr>
+            <tr>
+              <td style="border: 1px solid black; padding: 8px;">\(G\)</td>
+              <td style="border: 1px solid black; padding: 8px;">17</td>
+              <td style="border: 1px solid black; padding: 8px;">0</td>
+              <td style="border: 1px solid black; padding: 8px;">17</td>
+              <td style="border: 1px solid black; padding: 8px;">\(S→C→D→E→G\)</td>
+            </tr>
+          </table><br>
+
+          <h2 style="text-align:justify;">Iteration 6</h2><br>
+          <ol style="margin:0; padding-left:20px;">
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Is Open List Empty? \(→\) NO \(→\) Choose node with lowest \(f\) value \(→\) \(G\) 
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Move the chosen node from <i>Open List</i> to <i>Closed List</i>
+              <div style="padding-left:50px;">
+                Open List = [\(F(f=20)\)]<br>
+                Closed List = [\(S, C, B, D, E, G\)]<br>
+              </div>            
+            </li>
+            <li style="margin:0; line-height:1.3; text-align:justify;">
+              Is the chosen node goal? \(→\) YES \(→\) Stop the execution and return the path to chosen node \((G)\) 
+            </li>
+          </ol><br>
+
+          <h2 style="text-align:justify;">Final Result</h2>
+          <p style="text-align:justify;">The shortest path from <b>start node (S)</b> to <b>goal node (G)</b> is \(S→C→D→E→G\) with a total cost of <b>17</b>.
+          </p><br>
+          
+                 
         </div>
       </div>
 
@@ -201,7 +622,6 @@
       <div class="container" id="practice">
         <div class="title">Practice</div>
         <div class="content"></div>
-        <img src="images/A-Star-Graph.png" style= "width: 100%; max-width: 600px; display: block; margin: 0 auto;">
       </div>
 
       <!-- Results -->
