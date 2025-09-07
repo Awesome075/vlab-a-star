@@ -387,7 +387,7 @@ function drawGraph() {
   nodes.forEach((node, index) => {
     ctx.beginPath();
     ctx.arc(node.x, node.y, 20, 0, 2 * Math.PI);
-    ctx.fillStyle = "lightblue"; // Undiscovered
+    ctx.fillStyle = "white"; // Undiscovered
     if (index === startNode) ctx.fillStyle = "green";
     if (index === endNode) ctx.fillStyle = "red";
     ctx.fill();
@@ -398,7 +398,10 @@ function drawGraph() {
     ctx.textBaseline = "middle";
     ctx.fillText(node.name, node.x, node.y);
     ctx.font = "12px Arial";
-    ctx.fillText(`h=${node.h}`, node.x, node.y + 15);
+    if (typeof node.h === 'number') {
+        ctx.font = "12px Arial";
+        ctx.fillText(`h=${node.h}`, node.x, node.y + 15);
+    }
   });
 }
 
@@ -438,7 +441,7 @@ function calculateHeuristics(goalNodeIndex) {
     const dx = node.x - goalNode.x;
     const dy = node.y - goalNode.y;
     // integer division after scaling
-    nodes[index].h = Math.round(Math.sqrt(Math.sqrt((dx * dx) + (dy * dy)) / 10));
+    nodes[index].h = Math.round(Math.sqrt(Math.sqrt((dx * dx) + (dy * dy)) )/2);
   });
 }
 
@@ -452,7 +455,6 @@ function runAStar() {
   let closedList = [];
   astarStates = [];
   currentStateIndex = 0;
-  let algorithmStepsHTML = "<h2>Algorithm Steps</h2>";
 
   while (openList.length > 0) {
     openList.sort((a, b) => a.f - b.f);
@@ -466,8 +468,6 @@ function runAStar() {
       path: reconstructPath(currentNode)
     });
     
-    algorithmStepsHTML += generateAlgorithmSteps(astarStates.length - 1);
-
     if (currentNode.index === endNode) {
       practiceMessageArea.textContent = "Goal reached!";
       const finalState = astarStates[astarStates.length - 1];
@@ -498,7 +498,6 @@ function runAStar() {
       }
     });
   }
-  document.getElementById("algorithm-steps").innerHTML = algorithmStepsHTML;
   updateVisualization();
 }
 
@@ -529,28 +528,35 @@ function updateVisualization() {
 
   // Highlight open list
   state.openList.forEach(node => {
-    const n = nodes[node.index];
-    ctx.beginPath();
-    ctx.arc(n.x, n.y, 20, 0, 2 * Math.PI);
-    ctx.fillStyle = "rgba(255, 255, 0, 0.5)"; // Yellow
-    ctx.fill();
+    if (node.index !== startNode && node.index !== endNode) {
+        const n = nodes[node.index];
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, 20, 0, 2 * Math.PI);
+        ctx.fillStyle = "rgba(255, 255, 0, 0.5)"; // Yellow
+        ctx.fill();
+    }
   });
 
   // Highlight closed list
   state.closedList.forEach(index => {
-    const n = nodes[index];
-    ctx.beginPath();
-    ctx.arc(n.x, n.y, 20, 0, 2 * Math.PI);
-    ctx.fillStyle = "rgba(255, 165, 0, 0.5)"; // Orange
-    ctx.fill();
+    if (index !== startNode && index !== endNode) {
+        const n = nodes[index];
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, 20, 0, 2 * Math.PI);
+        ctx.fillStyle = "rgba(255, 165, 0, 0.5)"; // Orange
+        ctx.fill();
+    }
   });
 
   // Highlight current node
-  const currentNode = nodes[state.currentNode.index];
-  ctx.beginPath();
-  ctx.arc(currentNode.x, currentNode.y, 20, 0, 2 * Math.PI);
-  ctx.fillStyle = "rgba(144, 238, 144, 0.5)"; // Light Green
-  ctx.fill();
+    const currentNode = nodes[state.currentNode.index];
+    if (state.currentNode.index !== startNode && state.currentNode.index !== endNode) {
+    ctx.beginPath();
+    ctx.arc(currentNode.x, currentNode.y, 20, 0, 2 * Math.PI);
+    ctx.fillStyle = "rgba(144, 238, 144, 0.5)"; // Light Green
+    ctx.fill();
+  }
+
 
   // Draw path
   ctx.strokeStyle = "blue";
@@ -605,6 +611,11 @@ resetGraphBtn.addEventListener("click", () => {
   astarStates = [];
   currentStateIndex = 0;
   practiceMessageArea.textContent = "Select a start node.";
+
+  nodes.forEach(node => {
+    delete node.h;
+  });
+  
   drawGraph();
 });
 
