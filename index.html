@@ -170,6 +170,8 @@
             <li style="margin:0; line-height:1.3; text-align:justify;">Repeat steps 2-5 until the goal is reached.</li>
           </ol><br>
 
+          <div id="algorithm-steps"></div>
+
           <h2 style="text-align:justify;"> Applications in the Real World</h2>
           <p style="text-align:justify;">The A* algorithm is widely used in various fields where finding an optimal path is essential.</p>
           <ul style="margin:0; padding-left:20px;">
@@ -621,7 +623,15 @@
       <!-- Practice -->
       <div class="container" id="practice">
         <div class="title">Practice</div>
-        <div class="content"></div>
+        <div class="content">
+          <canvas id="practice-canvas" width="600" height="600"></canvas>
+          <div id="practice-controls">
+            <button id="prev-step-btn">Previous Step</button>
+            <button id="next-step-btn">Next Step</button>
+            <button id="reset-graph-btn">Reset Graph</button>
+          </div>
+          <div id="practice-message-area"></div>
+        </div>
       </div>
 
       <!-- Results -->

@@ -295,3 +295,318 @@ retakeButton.addEventListener("click", () => {
 nextButton.addEventListener("click", checkAnswer);
 
 showQuestion();
+
+// Practice Section Logic
+const practiceCanvas = document.getElementById("practice-canvas");
+const ctx = practiceCanvas.getContext("2d");
+const prevStepBtn = document.getElementById("prev-step-btn");
+const nextStepBtn = document.getElementById("next-step-btn");
+const resetGraphBtn = document.getElementById("reset-graph-btn");
+const practiceMessageArea = document.getElementById("practice-message-area");
+
+const nodes = [
+  { x: 50, y: 50,  name: "A" },
+  { x: 100, y: 170,  name: "B" },
+  { x: 220, y: 90,  name: "C" },
+  { x: 60, y: 350,  name: "D" },
+  { x: 400, y: 250,  name: "E" },
+  { x: 420, y: 100,  name: "F" },
+  { x: 550, y: 300,  name: "G" },
+  { x: 530, y: 40,  name: "H" },
+  { x: 380, y: 390,  name: "I" },
+  { x: 565, y: 450,  name: "J" },
+  { x: 230, y: 350,  name: "K" },
+  { x: 250, y: 470,  name: "L" },
+  { x: 40, y: 450,  name: "M" },
+  { x: 135, y: 565,  name: "N" },
+  { x: 400, y: 550,  name: "O" },
+
+];
+
+const edges = [
+  { start: 0, end: 1, cost: 13 },
+  { start: 0, end: 2, cost: 17 },
+  { start: 1, end: 3, cost: 18 },
+  { start: 1, end: 10, cost: 22 },
+  { start: 1, end: 2, cost: 14 },
+  { start: 1, end: 4, cost: 31 }, 
+  { start: 2, end: 4, cost: 24 },
+  { start: 2, end: 5, cost: 20 },
+  { start: 3, end: 10, cost: 17 },
+  { start: 3, end: 12, cost: 10 },
+  { start: 4, end: 10, cost: 19 },
+  { start: 4, end: 5, cost: 15 },
+  { start: 4, end: 6, cost: 15 },
+  { start: 4, end: 8, cost: 14 },
+  { start: 5, end: 7, cost: 12 },
+  { start: 6, end: 5, cost: 23 },
+  { start: 6, end: 9, cost: 15 },
+  { start: 7, end: 6, cost: 26 },
+  { start: 8, end: 6, cost: 19 },
+  { start: 8, end: 10, cost: 15 },
+  { start: 8, end: 11, cost: 15 },
+  { start: 8, end: 14, cost: 16 },
+  { start: 9, end: 8, cost: 19 },
+  { start: 9, end: 14, cost: 19 },
+  { start: 10, end: 11, cost: 12 },
+  { start: 11, end: 13, cost: 14 },
+  { start: 11, end: 14, cost: 17 },
+  { start: 12, end: 13, cost: 14 },
+  { start: 13, end: 14, cost: 26 },
+  
+];
+
+let startNode = null;
+let endNode = null;
+let astarStates = [];
+let currentStateIndex = 0;
+
+function drawGraph() {
+  ctx.clearRect(0, 0, practiceCanvas.width, practiceCanvas.height);
+
+  // Draw edges
+  ctx.strokeStyle = "#ccc";
+  ctx.lineWidth = 2;
+  edges.forEach(edge => {
+    const start = nodes[edge.start];
+    const end = nodes[edge.end];
+    ctx.beginPath();
+    ctx.moveTo(start.x, start.y);
+    ctx.lineTo(end.x, end.y);
+    ctx.stroke();
+    
+    // Draw edge cost
+    ctx.fillStyle = "black";
+    ctx.font = "16px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(edge.cost, (start.x + end.x) / 2, (start.y + end.y) / 2 - 10);
+  });
+
+  // Draw nodes
+  nodes.forEach((node, index) => {
+    ctx.beginPath();
+    ctx.arc(node.x, node.y, 20, 0, 2 * Math.PI);
+    ctx.fillStyle = "lightblue"; // Undiscovered
+    if (index === startNode) ctx.fillStyle = "green";
+    if (index === endNode) ctx.fillStyle = "red";
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = "black";
+    ctx.font = "16px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(node.name, node.x, node.y);
+    ctx.font = "12px Arial";
+    ctx.fillText(`h=${node.h}`, node.x, node.y + 15);
+  });
+}
+
+function getClickedNode(event) {
+  const rect = practiceCanvas.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+
+  for (let i = 0; i < nodes.length; i++) {
+    const node = nodes[i];
+    const distance = Math.sqrt((x - node.x) ** 2 + (y - node.y) ** 2);
+    if (distance < 20) {
+      return i;
+    }
+  }
+  return null;
+}
+
+practiceCanvas.addEventListener("click", (event) => {
+  const clickedNode = getClickedNode(event);
+  if (clickedNode !== null) {
+    if (startNode === null) {
+      startNode = clickedNode;
+      practiceMessageArea.textContent = `Start node selected: ${nodes[startNode].name}`;
+    } else if (endNode === null) {
+      endNode = clickedNode;
+      practiceMessageArea.textContent = `End node selected: ${nodes[endNode].name}. Click 'Next Step' to start the algorithm.`;
+      runAStar();
+    }
+    drawGraph();
+  }
+});
+
+function calculateHeuristics(goalNodeIndex) {
+  const goalNode = nodes[goalNodeIndex];
+  nodes.forEach((node, index) => {
+    const dx = node.x - goalNode.x;
+    const dy = node.y - goalNode.y;
+    // integer division after scaling
+    nodes[index].h = Math.round(Math.sqrt(Math.sqrt((dx * dx) + (dy * dy)) / 10));
+  });
+}
+
+
+function runAStar() {
+  if (startNode === null || endNode === null) return;
+
+  calculateHeuristics(endNode);
+
+  let openList = [{ index: startNode, g: 0, f: nodes[startNode].h, parent: null }];
+  let closedList = [];
+  astarStates = [];
+  currentStateIndex = 0;
+  let algorithmStepsHTML = "<h2>Algorithm Steps</h2>";
+
+  while (openList.length > 0) {
+    openList.sort((a, b) => a.f - b.f);
+    const currentNode = openList.shift();
+    closedList.push(currentNode.index);
+
+    astarStates.push({
+      openList: [...openList],
+      closedList: [...closedList],
+      currentNode: currentNode,
+      path: reconstructPath(currentNode)
+    });
+    
+    algorithmStepsHTML += generateAlgorithmSteps(astarStates.length - 1);
+
+    if (currentNode.index === endNode) {
+      practiceMessageArea.textContent = "Goal reached!";
+      const finalState = astarStates[astarStates.length - 1];
+      finalState.finalPath = finalState.path;
+      updateVisualization(); 
+      break;
+    }
+
+    const neighbors = edges.filter(edge => edge.start === currentNode.index || edge.end === currentNode.index)
+      .map(edge => edge.start === currentNode.index ? edge.end : edge.start);
+
+    neighbors.forEach(neighborIndex => {
+      if (closedList.includes(neighborIndex)) return;
+
+      const g = currentNode.g + edges.find(edge => (edge.start === currentNode.index && edge.end === neighborIndex) || (edge.start === neighborIndex && edge.end === currentNode.index)).cost;
+      const h = nodes[neighborIndex].h;
+      const f = g + h;
+
+      const existingOpen = openList.find(node => node.index === neighborIndex);
+      if (!existingOpen || g < existingOpen.g) {
+        if (existingOpen) {
+          existingOpen.g = g;
+          existingOpen.f = f;
+          existingOpen.parent = currentNode;
+        } else {
+          openList.push({ index: neighborIndex, g: g, f: f, parent: currentNode });
+        }
+      }
+    });
+  }
+  document.getElementById("algorithm-steps").innerHTML = algorithmStepsHTML;
+  updateVisualization();
+}
+
+function generateAlgorithmSteps(iteration) {
+  const state = astarStates[iteration];
+  let stepsHTML = `<h3>Iteration ${iteration + 1}</h3>`;
+  stepsHTML += `<p>Current Node: ${nodes[state.currentNode.index].name}</p>`;
+  stepsHTML += `<p>Open List: ${state.openList.map(n => nodes[n.index].name).join(", ")}</p>`;
+  stepsHTML += `<p>Closed List: ${state.closedList.map(i => nodes[i].name).join(", ")}</p>`;
+  return stepsHTML;
+}
+
+function reconstructPath(node) {
+  const path = [];
+  let current = node;
+  while (current) {
+    path.unshift(current.index);
+    current = current.parent;
+  }
+  return path;
+}
+
+function updateVisualization() {
+  const state = astarStates[currentStateIndex];
+  if (!state) return;
+
+  drawGraph();
+
+  // Highlight open list
+  state.openList.forEach(node => {
+    const n = nodes[node.index];
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, 20, 0, 2 * Math.PI);
+    ctx.fillStyle = "rgba(255, 255, 0, 0.5)"; // Yellow
+    ctx.fill();
+  });
+
+  // Highlight closed list
+  state.closedList.forEach(index => {
+    const n = nodes[index];
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, 20, 0, 2 * Math.PI);
+    ctx.fillStyle = "rgba(255, 165, 0, 0.5)"; // Orange
+    ctx.fill();
+  });
+
+  // Highlight current node
+  const currentNode = nodes[state.currentNode.index];
+  ctx.beginPath();
+  ctx.arc(currentNode.x, currentNode.y, 20, 0, 2 * Math.PI);
+  ctx.fillStyle = "rgba(144, 238, 144, 0.5)"; // Light Green
+  ctx.fill();
+
+  // Draw path
+  ctx.strokeStyle = "blue";
+  ctx.lineWidth = 4;
+  ctx.beginPath();
+  for (let i = 0; i < state.path.length; i++) {
+    const node = nodes[state.path[i]];
+    if (i === 0) {
+      ctx.moveTo(node.x, node.y);
+    } else {
+      ctx.lineTo(node.x, node.y);
+    }
+  }
+  ctx.stroke();
+
+  // Draw final path in red
+  if (state.finalPath) {
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    for (let i = 0; i < state.finalPath.length; i++) {
+      const node = nodes[state.finalPath[i]];
+      if (i === 0) {
+        ctx.moveTo(node.x, node.y);
+      } else {
+        ctx.lineTo(node.x, node.y);
+      }
+    }
+    ctx.stroke();
+  }
+  
+  practiceMessageArea.textContent = `Current Node: ${nodes[state.currentNode.index].name}, f=${state.currentNode.f.toFixed(2)}, g=${state.currentNode.g.toFixed(2)}, h=${nodes[state.currentNode.index].h.toFixed(2)}`;
+}
+
+nextStepBtn.addEventListener("click", () => {
+  if (currentStateIndex < astarStates.length - 1) {
+    currentStateIndex++;
+    updateVisualization();
+  }
+});
+
+prevStepBtn.addEventListener("click", () => {
+  if (currentStateIndex > 0) {
+    currentStateIndex--;
+    updateVisualization();
+  }
+});
+
+resetGraphBtn.addEventListener("click", () => {
+  startNode = null;
+  endNode = null;
+  astarStates = [];
+  currentStateIndex = 0;
+  practiceMessageArea.textContent = "Select a start node.";
+  drawGraph();
+});
+
+drawGraph();
+practiceMessageArea.textContent = "Select a start node.";
