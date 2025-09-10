@@ -106,7 +106,7 @@
         <div class="title">Aim</div>
         <div class="content">
           <p>Build an interactive lab to explore A* and how it combines cost and heuristics to find shortest paths on weighted maps.</p>
-              <img src="https://raw.githubusercontent.com/Awesome075/vlab-assets/main/pathfinding_animation_cropped_optimized.gif" alt="A* pathfinding animation" class="zoomed-gif" style= "width: 100%; max-width: 600px;">
+              <img src="images\pathfinding_animation_cropped_optimized_rotated.gif" alt="A* pathfinding animation" class="zoomed-gif">
         </div>
       </div>
 
@@ -195,402 +195,147 @@
 
       <!-- Procedure -->
       <div class="container" id="procedure">
-        <div class="title">Procedure</div>
-        <div class="content">
-          <p style="text-align: justify;">This section walks through the step-by-step process of how the A* algorithm finds the shortest path from the <b>start node (S)</b> to the <b>goal node (G)</b> on the search graph below. The numbers in red next to each node represent the heuristic values, \(h(n)\), which are our estimates of the cost to reach the goal.</p><br><br><br>
+        <h2>A* Search Algorithm Procedure</h2>
+        <p style="text-align: justify;">This section walks through the step-by-step process of how the A* algorithm finds the shortest path from the <b>start node (S)</b> to the <b>goal node (G)</b> on the search graph below. The numbers in red next to each node represent the heuristic values, \(h(n)\), which are our estimates of the cost to reach the goal.</p><br><br><br>
 
           <h1>Search Graph</h1> <br>
           <img src="images/A-Star-Graph.png" alt="A*-Graph" style= "width: 100%; max-width: 600px; display: block; margin: 0 auto;"><br><br>
-          
-          <h2 style="text-align:justify;">Initialization</h2><br> 
-          <p style="text-align:justify;">Add <b>start node (S)</b> to the open list.</p><br>
-          <p style="text-align:justify;">\(g(S)\) = 0 (Actual cost from S\(→\)S)</p>
-          <p style="text-align:justify;">\(h(S)\) = 14 (Guess Cost from S\(→\)G)</p>
-          <p style="text-align:justify;"> \(f(S)=g(S)+h(S)\) = 0 + 14 = 14</p><br>
-          <p style="text-align:justify;"> Open List = [\(S(f=14)\)] </p>
-          <p style="text-align:justify;"> Closed List = [] </p><br>
-
-
-          <h2 style="text-align:justify;">Iteration 1</h2><br>
-          <ol style="margin:0; padding-left:20px;">
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Is Open List Empty? \(→\) NO \(→\) Choose node with lowest \(f\) value \(→\) \(S\) 
-            </li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Move the chosen node from <i>Open List</i> to <i>Closed List</i>
-              <div style="padding-left:50px;">
-                Open List = []<br>
-                Closed List = [\(S\)]<br>
-              </div>            
-            </li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Is the chosen node goal? \(→\) NO \(→\) Evaluate all the neighbors of chosen node \((S)\) <b>:-</b> \(B\) , \(C\)
-            </li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              For \(B\) <b>:-</b> <br>
-              <div style="padding-left:50px;">
-                Calculate \(g(B)\) and \(f(B)\).<br>
-                \(g(B)\) = 4 (Actual cost from \(S→B\))<br>
-                \(h(B)\) = 12 (Guess cost from \(B→G\))<br>
-                \(f(B) = g(B) + h(B)\) = 4 + 12 = 16
-              </div></li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Is it a better cost path to \(B\) ? \(→\) YES \(→\) Add \(B\) to open list<br>
-              <div style="padding-left:50px;">
-              Open List = [\(B(f=16)\)]
-              </div>
-            </li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              For \(C\) <b>:-</b> <br>
-              <div style="padding-left:50px;">
-                Calculate \(g(C)\) and \(f(C)\).<br>
-                \(g(C)\) = 3 (Actual cost from \(S→C\))<br>
-                \(h(C)\) = 11 (Guess cost from \(C→G\))<br>
-                \(f(C) = g(C) + h(C)\) = 3 + 11 = 14
-              </div></li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Is it a better cost path to \(C\) ? \(→\) YES \(→\) Add \(C\) to open list<br>
-              <div style="padding-left:50px;">
-              Open List = [\(B(f=16), C(f=14)\)]
-              </div>
-            </li>
-          </ol><br>
-          <p style="text-align:justify;">At the end of iteration 1 <b>:-</b><br>
-            <div style="padding-left:50px; text-align: justify;">
-              Open List = [\(B(f=16), C(f=14)\)]<br>
-              Closed List = [\(S\)]
-            </div>
-          </p><br>
-          <table style="border-collapse: collapse; width: 60%; text-align: center;">
-            <tr>
-              <th style="border: 1px solid black; padding: 8px;">\(Node\)</th>
-              <th style="border: 1px solid black; padding: 8px;">\(g(n)\)</th>
-              <th style="border: 1px solid black; padding: 8px;">\(h(n)\)</th>
-              <th style="border: 1px solid black; padding: 8px;">\(f(n)\)</th>
-              <th style="border: 1px solid black; padding: 8px;">\(Path\)</th>
-            </tr>
-            <tr>
-              <td style="border: 1px solid black; padding: 8px;">\(B\)</td>
-              <td style="border: 1px solid black; padding: 8px;">4</td>
-              <td style="border: 1px solid black; padding: 8px;">12</td>
-              <td style="border: 1px solid black; padding: 8px;">16</td>
-              <td style="border: 1px solid black; padding: 8px;">\(S→B\)</td>
-            </tr>
-            <tr>
-              <td style="border: 1px solid black; padding: 8px;">\(C\)</td>
-              <td style="border: 1px solid black; padding: 8px;">3</td>
-              <td style="border: 1px solid black; padding: 8px;">11</td>
-              <td style="border: 1px solid black; padding: 8px;">14</td>
-              <td style="border: 1px solid black; padding: 8px;">\(S→C\)</td>
-            </tr>
-          </table><br>
-
-          <h2 style="text-align:justify;">Iteration 2</h2><br>
-          <ol style="margin:0; padding-left:20px;">
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Is Open List Empty? \(→\) NO \(→\) Choose node with lowest \(f\) value \(→\) \(C\) 
-            </li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Move the chosen node from <i>Open List</i> to <i>Closed List</i>
-              <div style="padding-left:50px;">
-                Open List = [\(B(f=16)\)]<br>
-                Closed List = [\(S, C\)]<br>
-              </div>            
-            </li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Is the chosen node goal? \(→\) NO \(→\) Evaluate all the neighbors of chosen node \((C)\) <b>:-</b> \(D\) , \(E\)
-            </li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              For \(D\) <b>:-</b> <br>
-              <div style="padding-left:50px;">
-                Calculate \(g(D)\) and \(f(D)\).<br>
-                \(g(D)\) = 3 + 7 = 10 (Actual cost from \(S→C→D\))<br>
-                \(h(D)\) = 6 (Guess cost from \(D→G\))<br>
-                \(f(D) = g(D) + h(D)\) = 10 + 6 = 16
-              </div></li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Is it a better cost path to \(D\) ? \(→\) YES \(→\) Add D to open list<br>
-              <div style="padding-left:50px;">
-              Open List = [\(B(f=16),\) \(D(f=16)\)]
-              </div>
-            </li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              For \(E\) <b>:-</b> <br>
-              <div style="padding-left:50px;">
-                Calculate \(g(E)\) and \(f(E)\).<br>
-                \(g(E)\) = 3 + 10 = 13 (Actual cost from \(S→C→E\))<br>
-                \(h(E)\) = 4 (Guess cost from \(E→G\))<br>
-                \(f(E) = g(E) + h(E)\) = 13 + 4 = 17
-              </div></li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Is it a better cost path to \(E\) ? \(→\) YES \(→\) Add \(E\) to open list<br>
-              <div style="padding-left:50px;">
-              Open List = [\(B(f=16), D(f=16), E(f=17)\)]
-              </div>
-            </li>
-          </ol><br>
-          <p style="text-align:justify;">At the end of iteration 2 <b>:-</b><br>
-            <div style="padding-left:50px; text-align: justify;">
-              Open List = [\(B(f=16), D(f=16), E(f=17)\)]<br>
-              Closed List = [\(S,C\)]
-            </div>
-          </p><br>
-          <table style="border-collapse: collapse; width: 60%; text-align: center;">
-            <tr>
-              <th style="border: 1px solid black; padding: 8px;">\(Node\)</th>
-              <th style="border: 1px solid black; padding: 8px;">\(g(n)\)</th>
-              <th style="border: 1px solid black; padding: 8px;">\(h(n)\)</th>
-              <th style="border: 1px solid black; padding: 8px;">\(f(n)\)</th>
-              <th style="border: 1px solid black; padding: 8px;">\(Path\)</th>
-            </tr>
-            <tr>
-              <td style="border: 1px solid black; padding: 8px;">\(B\)</td>
-              <td style="border: 1px solid black; padding: 8px;">4</td>
-              <td style="border: 1px solid black; padding: 8px;">12</td>
-              <td style="border: 1px solid black; padding: 8px;">16</td>
-              <td style="border: 1px solid black; padding: 8px;">\(S→B\)</td>
-            </tr>
-            <tr>
-              <td style="border: 1px solid black; padding: 8px;">\(D\)</td>
-              <td style="border: 1px solid black; padding: 8px;">10</td>
-              <td style="border: 1px solid black; padding: 8px;">6</td>
-              <td style="border: 1px solid black; padding: 8px;">16</td>
-              <td style="border: 1px solid black; padding: 8px;">\(S→C→D\)</td>
-            </tr>
-            <tr>
-              <td style="border: 1px solid black; padding: 8px;">\(E\)</td>
-              <td style="border: 1px solid black; padding: 8px;">13</td>
-              <td style="border: 1px solid black; padding: 8px;">4</td>
-              <td style="border: 1px solid black; padding: 8px;">17</td>
-              <td style="border: 1px solid black; padding: 8px;">\(S→C→E\)</td>
-            </tr>
-          </table><br>
-
-          <h2 style="text-align:justify;">Iteration 3</h2><br>
-          <ol style="margin:0; padding-left:20px;">
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Is Open List Empty? \(→\) NO \(→\) Choose node with lowest \(f\) value \(→\) \(B\) <br> <b>(In case of tie we can chose either nodes; here we decided to chose B since it came first in the open list.)</b>
-            </li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Move the chosen node from <i>Open List</i> to <i>Closed List</i>
-              <div style="padding-left:50px;">
-                Open List = [\(D(f=16), (E(f=17)\)]<br>
-                Closed List = [\(S, C, B\)]<br>
-              </div>            
-            </li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Is the chosen node goal? \(→\) NO \(→\) Evaluate all the neighbors of chosen node \((B)\) <b>:-</b> \(F\) , \(E\)
-            </li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              For \(F\) <b>:-</b> <br>
-              <div style="padding-left:50px;">
-                Calculate \(g(F)\) and \(f(F)\).<br>
-                \(g(F)\) = 4 + 5 = 9 (Actual cost from \(S→B→F\))<br>
-                \(h(F)\) = 11 (Guess cost from \(F→G\))<br>
-                \(f(F) = g(F) + h(F)\) = 9 + 11 = 20
-              </div></li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Is it a better cost path to \(F\) ? \(→\) YES \(→\) Add \(F\) to open list<br>
-              <div style="padding-left:50px;">
-              Open List = [\(D(f=16), E(f=17), F(f=20)\)]
-              </div>
-            </li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              For \(E\) <b>:-</b> <br>
-              <div style="padding-left:50px;">
-                Calculate \(g(E)\) and \(f(E)\).<br>
-                \(g(E)\) = 4 + 12 = 16 (Actual cost from \(S→B→E\))<br>
-                \(h(E)\) = 4 (Guess cost from \(E→G\))<br>
-                \(f(E) = g(E) + h(E)\) = 16 + 4 = 20
-              </div></li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Is it a better cost path to \(E\) ? \(→\) NO \(→\) Don't add new \(f\) value of \(E\) to open list<br>
-              <div style="padding-left:50px;">
-              Open List = [\(D(f=16), E(f=17), F(f=20)\)]
-              </div>
-            </li>
-          </ol><br>
-          <p style="text-align:justify;">At the end of iteration 3 <b>:-</b><br>
-            <div style="padding-left:50px; text-align: justify;">
-              Open List = [\(D(f=16), E(f=17), F(f=20)\)]<br>
-              Closed List = [\(S, C, B\)]
-            </div>
-          </p><br>
-          <table style="border-collapse: collapse; width: 60%; text-align: center;">
-            <tr>
-              <th style="border: 1px solid black; padding: 8px;">\(Node\)</th>
-              <th style="border: 1px solid black; padding: 8px;">\(g(n)\)</th>
-              <th style="border: 1px solid black; padding: 8px;">\(h(n)\)</th>
-              <th style="border: 1px solid black; padding: 8px;">\(f(n)\)</th>
-              <th style="border: 1px solid black; padding: 8px;">\(Path\)</th>
-            </tr>
-            <tr>
-              <td style="border: 1px solid black; padding: 8px;">\(D\)</td>
-              <td style="border: 1px solid black; padding: 8px;">10</td>
-              <td style="border: 1px solid black; padding: 8px;">6</td>
-              <td style="border: 1px solid black; padding: 8px;">16</td>
-              <td style="border: 1px solid black; padding: 8px;">\(S→C→D\)</td>
-            </tr>
-            <tr>
-              <td style="border: 1px solid black; padding: 8px;">\(E\)</td>
-              <td style="border: 1px solid black; padding: 8px;">13</td>
-              <td style="border: 1px solid black; padding: 8px;">4</td>
-              <td style="border: 1px solid black; padding: 8px;">17</td>
-              <td style="border: 1px solid black; padding: 8px;">\(S→C→E\)</td>
-            </tr>
-            <tr>
-              <td style="border: 1px solid black; padding: 8px;">\(F\)</td>
-              <td style="border: 1px solid black; padding: 8px;">9</td>
-              <td style="border: 1px solid black; padding: 8px;">11</td>
-              <td style="border: 1px solid black; padding: 8px;">20</td>
-              <td style="border: 1px solid black; padding: 8px;">\(S→B→F\)</td>
-            </tr>
-          </table><br>
-
-          <h2 style="text-align:justify;">Iteration 4</h2><br>
-          <ol style="margin:0; padding-left:20px;">
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Is Open List Empty? \(→\) NO \(→\) Choose node with lowest \(f\) value \(→\) \(D\) 
-            </li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Move the chosen node from <i>Open List</i> to <i>Closed List</i>
-              <div style="padding-left:50px;">
-                Open List = [\(E(f=17), F(f=20)\)]<br>
-                Closed List = [\(S, C, B, D\)]<br>
-              </div>            
-            </li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Is the chosen node goal? \(→\) NO \(→\) Evaluate all the neighbors of chosen node \((D)\) <b>:-</b> \(E\) 
-            </li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              For \(E\) <b>:-</b> <br>
-              <div style="padding-left:50px;">
-                Calculate \(g(E)\) and \(f(E)\).<br>
-                \(g(E)\) = 3 + 7 + 2 = 12 (Actual cost from \(S→C→D→E\))<br>
-                \(h(E)\) = 4 (Guess cost from \(E→G\))<br>
-                \(f(E) = g(E) + h(E)\) = 12 + 4 = 16
-              </div></li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Is it a  better cost path to \(E\) ? \(→\) YES \(→\) Add new \(f\) value of \(E\) to open list<br>
-              <div style="padding-left:50px;">
-              Open List = [\(E(f=16), F(f=20)\)]
-              </div>
-            </li>
-          </ol><br>
-          <p style="text-align:justify;">At the end of iteration 4 <b>:-</b><br>
-            <div style="padding-left:50px; text-align: justify;">
-              Open List = [\(E(f=16), F(f=20)\)]<br>
-              Closed List = [\(S, C, B, D\)]
-            </div>
-          </p><br>
-          <table style="border-collapse: collapse; width: 60%; text-align: center;">
-            <tr>
-              <th style="border: 1px solid black; padding: 8px;">\(Node\)</th>
-              <th style="border: 1px solid black; padding: 8px;">\(g(n)\)</th>
-              <th style="border: 1px solid black; padding: 8px;">\(h(n)\)</th>
-              <th style="border: 1px solid black; padding: 8px;">\(f(n)\)</th>
-              <th style="border: 1px solid black; padding: 8px;">\(Path\)</th>
-            </tr>
-            <tr>
-              <td style="border: 1px solid black; padding: 8px;">\(E\)</td>
-              <td style="border: 1px solid black; padding: 8px;">12</td>
-              <td style="border: 1px solid black; padding: 8px;">4</td>
-              <td style="border: 1px solid black; padding: 8px;">16</td>
-              <td style="border: 1px solid black; padding: 8px;">\(S→C→D→E\)</td>
-            </tr>
-            <tr>
-              <td style="border: 1px solid black; padding: 8px;">\(F\)</td>
-              <td style="border: 1px solid black; padding: 8px;">9</td>
-              <td style="border: 1px solid black; padding: 8px;">11</td>
-              <td style="border: 1px solid black; padding: 8px;">20</td>
-              <td style="border: 1px solid black; padding: 8px;">\(S→B→F\)</td>
-            </tr>
-          </table><br>
-
-          <h2 style="text-align:justify;">Iteration 5</h2><br>
-          <ol style="margin:0; padding-left:20px;">
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Is Open List Empty? \(→\) NO \(→\) Choose node with lowest \(f\) value \(→\) \(E\) 
-            </li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Move the chosen node from <i>Open List</i> to <i>Closed List</i>
-              <div style="padding-left:50px;">
-                Open List = [\(F(f=20)\)]<br>
-                Closed List = [\(S, C, B, D, E\)]<br>
-              </div>            
-            </li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Is the chosen node goal? \(→\) NO \(→\) Evaluate all the neighbors of chosen node \((E)\) <b>:-</b> \(G\) 
-            </li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              For \(G\) <b>:-</b> <br>
-              <div style="padding-left:50px;">
-                Calculate \(g(G)\) and \(f(G)\).<br>
-                \(g(G)\) = 3 + 7 + 2 + 5 = 17 (Actual cost from \(S→C→D→E→G\))<br>
-                \(h(G)\) = 0 (Guess cost from \(G→G\))<br>
-                \(f(G) = g(G) + h(G)\) = 17 + 0 = 17
-              </div></li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Is it a better cost path to \(G\) ? \(→\) YES \(→\) Add \(G\) to open list<br>
-              <div style="padding-left:50px;">
-              Open List = [\(F(f=20), G(f=17)\)]
-              </div>
-            </li>
-          </ol><br>
-          <p style="text-align:justify;">At the end of iteration 5 <b>:-</b><br>
-            <div style="padding-left:50px; text-align: justify;">
-              Open List = [\(F(f=20), G(f=17)\)]<br>
-              Closed List = [\(S, C, B, D, E\)]
-            </div>
-          </p><br>
-          <table style="border-collapse: collapse; width: 60%; text-align: center;">
-            <tr>
-              <th style="border: 1px solid black; padding: 8px;">\(Node\)</th>
-              <th style="border: 1px solid black; padding: 8px;">\(g(n)\)</th>
-              <th style="border: 1px solid black; padding: 8px;">\(h(n)\)</th>
-              <th style="border: 1px solid black; padding: 8px;">\(f(n)\)</th>
-              <th style="border: 1px solid black; padding: 8px;">\(Path\)</th>
-            </tr>
-            <tr>
-              <td style="border: 1px solid black; padding: 8px;">\(F\)</td>
-              <td style="border: 1px solid black; padding: 8px;">9</td>
-              <td style="border: 1px solid black; padding: 8px;">11</td>
-              <td style="border: 1px solid black; padding: 8px;">20</td>
-              <td style="border: 1px solid black; padding: 8px;">\(S→B→F\)</td>
-            </tr>
-            <tr>
-              <td style="border: 1px solid black; padding: 8px;">\(G\)</td>
-              <td style="border: 1px solid black; padding: 8px;">17</td>
-              <td style="border: 1px solid black; padding: 8px;">0</td>
-              <td style="border: 1px solid black; padding: 8px;">17</td>
-              <td style="border: 1px solid black; padding: 8px;">\(S→C→D→E→G\)</td>
-            </tr>
-          </table><br>
-
-          <h2 style="text-align:justify;">Iteration 6</h2><br>
-          <ol style="margin:0; padding-left:20px;">
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Is Open List Empty? \(→\) NO \(→\) Choose node with lowest \(f\) value \(→\) \(G\) 
-            </li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Move the chosen node from <i>Open List</i> to <i>Closed List</i>
-              <div style="padding-left:50px;">
-                Open List = [\(F(f=20)\)]<br>
-                Closed List = [\(S, C, B, D, E, G\)]<br>
-              </div>            
-            </li>
-            <li style="margin:0; line-height:1.3; text-align:justify;">
-              Is the chosen node goal? \(→\) YES \(→\) Stop the execution and return the path to chosen node \((G)\) 
-            </li>
-          </ol><br>
-
-          <h2 style="text-align:justify;">Final Result</h2>
-          <p style="text-align:justify;">The shortest path from <b>start node (S)</b> to <b>goal node (G)</b> is \(S→C→D→E→G\) with a total cost of <b>17</b>.
-          </p><br>
-          
-                 
+    
+        <h2>Initialization</h2>
+        <ul>
+            <li>Add <strong>start node (S)</strong> to the open list.</li>
+            <li>\(g(S) = 0\) (Actual cost from S→S)</li>
+            <li>\(h(S) = 14\) (Guess Cost from S→G)</li>
+            <li>\(f(S)=g(S)+h(S) = 0 + 14 = 14\)</li>
+        </ul>
+        <div class="priority-queue">Initial State: Open Set = {S(f=14)}; Closed Set = {}</div>
+    
+        <div class="step">
+            <h3>Iteration 1: Expand S</h3>
+            <p>Neighbors of S: <strong>B, C</strong></p>
+            <ul>
+                <li>For B: \(g(B) = 4\), \(h(B) = 12\), \(f(B) = 4 + 12 = 16\)</li>
+                <li>For C: \(g(C) = 3\), \(h(C) = 11\), \(f(C) = 3 + 11 = 14\)</li>
+            </ul>
+            <h4>Updated Table:</h4>
+            <table>
+                <tr>
+                    <th>Node</th><th>g(n)</th><th>h(n)</th><th>f(n)</th><th>Path</th>
+                </tr>
+                <tr>
+                    <td>B</td><td>4</td><td>12</td><td>16</td><td>S→B</td>
+                </tr>
+                <tr>
+                    <td>C</td><td>3</td><td>11</td><td>14</td><td>S→C</td>
+                </tr>
+            </table>
+            <div class="priority-queue">End of Iteration 1: Open Set = {C(f=14), B(f=16)}; Closed Set = {S}</div>
         </div>
-      </div>
+    
+        <div class="step">
+            <h3>Iteration 2: Expand C</h3>
+            <p>Neighbors of C: <strong>D, E</strong></p>
+            <ul>
+                <li>For D: \(g(D) = 3+7=10\), \(h(D) = 6\), \(f(D) = 10+6=16\)</li>
+                <li>For E: \(g(E) = 3+10=13\), \(h(E) = 4\), \(f(E) = 13+4=17\)</li>
+            </ul>
+            <h4>Updated Table:</h4>
+            <table>
+                <tr>
+                    <th>Node</th><th>g(n)</th><th>h(n)</th><th>f(n)</th><th>Path</th>
+                </tr>
+                <tr>
+                    <td>B</td><td>4</td><td>12</td><td>16</td><td>S→B</td>
+                </tr>
+                <tr>
+                    <td>D</td><td>10</td><td>6</td><td>16</td><td>S→C→D</td>
+                </tr>
+                <tr>
+                    <td>E</td><td>13</td><td>4</td><td>17</td><td>S→C→E</td>
+                </tr>
+            </table>
+            <div class="priority-queue">End of Iteration 2: Open Set = {B(f=16), D(f=16), E(f=17)}; Closed Set = {S, C}</div>
+        </div>
+    
+        <div class="step">
+            <h3>Iteration 3: Expand B</h3>
+            <p>Neighbors of B: <strong>F, E</strong>. (Note: In case of a tie in f-values, B was chosen as it came first).</p>
+            <ul>
+                <li>For F: \(g(F) = 4+5=9\), \(h(F) = 11\), \(f(F) = 9+11=20\)</li>
+                <li>For E: New path cost \(g(E) = 4+12=16\). This is worse than the existing path cost of 13, so we ignore it.</li>
+            </ul>
+            <h4>Updated Table:</h4>
+            <table>
+                <tr>
+                    <th>Node</th><th>g(n)</th><th>h(n)</th><th>f(n)</th><th>Path</th>
+                </tr>
+                <tr>
+                    <td>D</td><td>10</td><td>6</td><td>16</td><td>S→C→D</td>
+                </tr>
+                <tr>
+                    <td>E</td><td>13</td><td>4</td><td>17</td><td>S→C→E</td>
+                </tr>
+                <tr>
+                    <td>F</td><td>9</td><td>11</td><td>20</td><td>S→B→F</td>
+                </tr>
+            </table>
+            <div class="priority-queue">End of Iteration 3: Open Set = {D(f=16), E(f=17), F(f=20)}; Closed Set = {S, C, B}</div>
+        </div>
+        
+        <div class="step">
+            <h3>Iteration 4: Expand D</h3>
+            <p>Neighbors of D: <strong>E</strong></p>
+            <ul>
+                <li>For E: New path cost \(g(E) = 10+2=12\). This is better than the existing path cost of 13. We update E's path and f-value.</li>
+                <li>Updated E: \(g(E) = 12\), \(h(E) = 4\), \(f(E) = 12+4=16\)</li>
+            </ul>
+            <h4>Updated Table:</h4>
+            <table>
+                <tr>
+                    <th>Node</th><th>g(n)</th><th>h(n)</th><th>f(n)</th><th>Path</th>
+                </tr>
+                <tr>
+                    <td>E</td><td>12</td><td>4</td><td>16</td><td>S→C→D→E</td>
+                </tr>
+                <tr>
+                    <td>F</td><td>9</td><td>11</td><td>20</td><td>S→B→F</td>
+                </tr>
+            </table>
+            <div class="priority-queue">End of Iteration 4: Open Set = {E(f=16), F(f=20)}; Closed Set = {S, C, B, D}</div>
+        </div>
+    
+        <div class="step">
+            <h3>Iteration 5: Expand E</h3>
+            <p>Neighbors of E: <strong>G</strong></p>
+            <ul>
+                <li>For G: \(g(G) = 12+5=17\), \(h(G) = 0\), \(f(G) = 17+0=17\)</li>
+            </ul>
+            <h4>Updated Table:</h4>
+            <table>
+                <tr>
+                    <th>Node</th><th>g(n)</th><th>h(n)</th><th>f(n)</th><th>Path</th>
+                </tr>
+                 <tr>
+                    <td>G</td><td>17</td><td>0</td><td>17</td><td>S→C→D→E→G</td>
+                </tr>
+                <tr>
+                    <td>F</td><td>9</td><td>11</td><td>20</td><td>S→B→F</td>
+                </tr>
+            </table>
+            <div class="priority-queue">End of Iteration 5: Open Set = {G(f=17), F(f=20)}; Closed Set = {S, C, B, D, E}</div>
+        </div>
+    
+        <div class="step">
+            <h3>Iteration 6: Expand G (Goal)</h3>
+            <p><strong>G is the goal. We're done!</strong></p>
+            <p>The algorithm stops and returns the path found to the goal node.</p>
+            <div class="optimal">
+                <p>Optimal Path: <strong>S → C → D → E → G</strong></p>
+                <p>Optimal Cost: <strong>17</strong></p>
+                <p>The shortest path from the start node (S) to the goal node (G) has a total cost of 17.</p>
+            </div>
+        </div>
+    </div>
 
       <!-- Code -->
       <div class="container" id="code">
@@ -679,42 +424,39 @@
         <div class="title">References</div>
         <div class="content">
           <ul class="ref-list">
-            <li>
-              <span> refernce 1 </span>
-            </li>
-            <li>
-              <span> refernce 2 </span>
-            </li>
+            <li><span>Cormen, T. H., Leiserson, C. E., Rivest, R. L., Stein, C. (2022). Introduction to
+              Algorithms, Fourth Edition. United Kingdom: MIT Press.</span></li>
+      <li><span>Bhargava, A. (2016). Grokking Algorithms: An Illustrated Guide for Programmers and
+              Other Curious People. United States: Manning.</span></li>
           </ul>
         </div>
       </div>
 
       <!-- Team & Tools -->
+      <!-- Team & Tools Section -->
       <div class="container" id="tnt">
-        <div class="title">Team & Tools</div>
-        <div class="content">
-          <h3>Students</h3>
-          <ul class="ref-list">
-            <li>
-              <a href="profile url if you have" rel="noopener" target="_blank"><span>Name and Course of each team
-                  member</span></a>
-            </li>
-          </ul>
-          <h3>Mentors</h3>
-          <ul class="ref-list">
-            <li><span> Mentor Name</span></li>
-          </ul>
-          <h3>Tools Used</h3>
-          <ul class="tools-list">
-            <li>
-              <span> Add tools used here </span>
-            </li>
-            <li>
-              <span>Vanilla HTML, CSS, JS - for creating the web page</span>
-            </li>
-          </ul>
+        <div class="title">
+            Team & Tools
         </div>
-      </div>
+        <div class="content">
+            <span>Students</span>
+            <ul class="ref-list">
+                <li><a href="https://www.linkedin.com/in/adi-maqsood-90942b258/" rel="noopener"
+                        target="_blank"><span>Adi Maqsood - B. Sc. (H) CS</span></a></li>
+                <li><a href="https://www.linkedin.com/in/adiz-cam" rel="noopener"
+                        target="_blank"><span>Aditya Maurya - B. Sc. (H) CS</span></a></li>
+            </ul>
+            <span>Mentors</span>
+            <ul class="ref-list">
+                <li><span>Ms. Priyanka Sharma</span></li>
+            </ul>
+            <span>Tools Used</span>
+            <ul class="tools-list">
+                <li><span>Vanilla HTML, CSS, JS - for creating the web page</span></li>
+                <li><span>Figma - for designing figures and UI mockups</span></li>
+            </ul>
+        </div>
+    </div>
     </section>
   </div>
   <script>
