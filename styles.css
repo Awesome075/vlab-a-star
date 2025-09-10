@@ -254,6 +254,21 @@ body {
   font-size: 0;
 }
 
+button {
+  margin-top: 20px; /* Consolidated from below */
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #6725d0;
+}
+
 /* Responsive styles */
 @media screen and (max-width: 840px) {
   .header {
@@ -289,6 +304,7 @@ body {
   .nav-menu.show {
     right: 0;
   }
+
 
   .copy-button {
     position: absolute;
@@ -844,6 +860,11 @@ pre {
   }
 }
 
+.zoomed-gif {
+  max-width: 100%;   /* force scale inside container */
+  height: auto;
+}
+
 @media screen and (max-width: 500px) {
   .vlab {
     font-size: 1.5rem;
@@ -902,6 +923,21 @@ pre {
   .title {
     font-size: 14px;
   }
+
+  .zoomed-gif {
+    transform: none;   /* remove rotation on mobile */
+    max-width: 100%;
+    height: auto;
+  }
+
+  #practice-canvas {
+    width: 80% !important;
+    /* The canvas will be a square, with height matching the calculated width */
+    aspect-ratio: 1 / 1; 
+    margin: 20px auto 0;  /* top:50px, left/right:auto, bottom:0 */
+    display: block;
+    border: 1px solid #ccc;
+  }
 }
 
 /* For very small screens */
@@ -947,11 +983,17 @@ pre {
     position: relative; 
   }
 
-  .zoomed-gif {
-    margin-top: 0px;
-    transform: rotate(90deg);
-    
-  }
+  /* general styles */
+.content img.zoomed-gif {
+  display: block;
+  margin: 50px auto 0;  /* top:50px, left/right:auto, bottom:0 */
+  width: 100% !important;
+  max-width: 80% !important;
+  height: auto !important;
+  /*transform: rotate(90deg);*/
+}
+
+
 code {
   background-color: #f4f4f4;  
   padding: 2px 5px;
@@ -960,8 +1002,12 @@ code {
 }
 
 #practice-canvas {
-  border: 1px solid black;
-  margin-bottom: 10px;
+  width: 50%;
+  /* The canvas will be a square, with height matching the calculated width */
+  aspect-ratio: 1 / 1; 
+  margin: 20px auto 0;  /* top:50px, left/right:auto, bottom:0 */
+  display: block;
+  border: 1px solid #ccc;
 }
 
 #practice-controls {
@@ -978,3 +1024,93 @@ code {
   margin-top: 10px;
   font-weight: bold;
 }
+
+
+
+/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+::selection {
+  color: rgb(11, 0, 48);
+  background: rgba(110, 188, 230, 0.675);
+}
+
+/* --- General Element Styles --- */
+h2 {
+  font-size: 24px;
+  color: rgb(0, 0, 0);
+  margin-bottom: 10px;
+}
+
+h4 {
+  font-size: 14px;
+  color: #777;
+}
+
+ul,
+ol {
+  padding-left: 0px;
+  margin: 10px 0;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+/* --- Table Styles --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background-color: #007bff;
+  color: white;
+}
+
+/* --- Component Styles --- */
+.priority-queue {
+  background: #e8f4ff;
+  padding: 10px;
+  border-left: 4px solid #007bff;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.step {
+  margin-bottom: 20px;
+  padding: 8px;
+  background: #f9f9f9;
+  border-left: 4px solid #28a745;
+  border-radius: 4px;
+}
+
+.step h3 {
+  margin-top: 0;
+}
+
+.optimal {
+  background: #d4edda;
+  border-left: 4px solid #155724;
+  padding: 15px;
+  border-radius: 4px;
+}
+

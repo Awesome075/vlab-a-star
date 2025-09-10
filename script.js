@@ -124,19 +124,109 @@ document.querySelectorAll(".copy-button").forEach((button) => {
   });
 });
 
-// Quiz Logic
 const questions = [
   {
-    question: " Q1) Which of the following is/are valid searching algorithms?",
-    choices: ["Linear Search", "Bubble Sort", "Binary Search", "Quick Sort"],
-    correctAnswers: [0, 2]
+    question: "Q1) What is the primary purpose of the A* algorithm?",
+    choices: [
+      "Finding the shortest path in a weighted graph",
+      "Sorting elements in an array",
+      "Compressing data for storage",
+      "Encrypting messages"
+    ],
+    correctAnswers: [0]
   },
   {
-    question: " Q2) What is/are the time complexity of linear search?",
-    choices: ["O(log n)", "O(n)", "O(n^2)", "O(1)"],
+    question: "Q2) Which two functions does A* use to determine the best path?",
+    choices: [
+      "Depth function (D) and Cost function (C)",
+      "Heuristic function (h) and Cost function (g)",
+      "Distance function (d) and Weight function (w)",
+      "Priority function (p) and Search function (s)"
+    ],
     correctAnswers: [1]
   },
+  {
+    question: "Q3) What property makes A* optimal and complete?",
+    choices: [
+      "Using a heuristic that never overestimates the cost",
+      "Expanding all possible nodes before selecting the best path",
+      "Ignoring the heuristic function for faster execution",
+      "Only exploring direct neighbors of a node"
+    ],
+    correctAnswers: [0]
+  },
+  {
+    question: "Q4) Which data structure is commonly used to efficiently store nodes in A* search?",
+    choices: [
+      "Queue",
+      "Stack",
+      "Priority Queue",
+      "Linked List"
+    ],
+    correctAnswers: [2]
+  },
+  {
+    question: "Q5) In A*, what does the formula f(n) = g(n) + h(n) calculate?",
+    choices: [
+      "The exact cost from the start node to node n.",
+      "The total estimated cost of the cheapest path from start to goal via node n.",
+      "The straight-line distance from node n to the goal.",
+      "The cost from the start node to the parent of node n."
+    ],
+    correctAnswers: [1]
+  },
+  {
+    question: "Q6) What does the 'g(n)' value represent for a given node n?",
+    choices: [
+      "The estimated cost from node n to the goal.",
+      "The lowest cost of the path found so far from the start node to node n.",
+      "The number of neighbors node n has.",
+      "The total estimated cost of the path through n."
+    ],
+    correctAnswers: [1]
+  },
+  {
+    question: "Q7) How does A* differ from Dijkstra's algorithm?",
+    choices: [
+      "Dijkstra's is only for unweighted graphs.",
+      "A* uses a heuristic (h) to guide its search, while Dijkstra does not.",
+      "A* is faster but does not guarantee the shortest path.",
+      "Dijkstra's algorithm is not used for pathfinding."
+    ],
+    correctAnswers: [1]
+  },
+  {
+    question: "Q8) What is the purpose of the 'Open Set' (or Open List) in A*?",
+    choices: [
+      "To store all nodes that have been visited and fully explored.",
+      "To store the final path once the goal is reached.",
+      "To store nodes that have been discovered but not yet fully explored.",
+      "To store all nodes that cannot be reached."
+    ],
+    correctAnswers: [2]
+  },
+  {
+    question: "Q9) If you modify A* to only consider the heuristic value (i.e., f(n) = h(n)), it becomes which algorithm?",
+    choices: [
+      "Breadth-First Search",
+      "Depth-First Search",
+      "Dijkstra's Algorithm",
+      "Greedy Best-First Search"
+    ],
+    correctAnswers: [3]
+  },
+  {
+    question: "Q10) What is the primary reason for using a 'Closed Set' (or Closed List) in A*?",
+    choices: [
+      "To prevent the algorithm from getting stuck in loops by not re-processing nodes.",
+      "To store nodes that have a very high heuristic value.",
+      "To act as a backup for the Open Set.",
+      "To store only the starting and goal nodes."
+    ],
+    correctAnswers: [0]
+  }
 ];
+
 
 let currentQuestionIndex = 0;
 let score = 0;
